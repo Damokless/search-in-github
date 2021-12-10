@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 import { Text, TextInput, Button, View, Image, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faMapMarkerAlt, faBuilding, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
 
 function HomeScreen({ navigation }) {
   const [username, setUsername] = useState('')
@@ -21,26 +23,42 @@ function HomeScreen({ navigation }) {
 function ResultSearch({ route, navigation }) {
   const { username } = route.params;
   const [user, setUser] = useState({})
+  const [date, setDate] = useState('')
 
   async function getUserInfo(username) {
     const response = await fetch(`http://192.168.0.32:4242/user/${username}`);
     const data = await response.json();
     setUser(data)
+    setDate(user.created_at.slice(0, 10).split('-').reverse().join('/'))
   }
   getUserInfo(username)
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
       <Image style={styles.avatar} source={{uri: user.avatar_url}}/>
       <Text style={styles.title}>{user.login}</Text>
-      <Text>{user.name}</Text>
-      <Text>{user.bio}</Text>
-      <Text>Followers {user.followers}</Text>
-      <Text>Following {user.following}</Text>
-      <Text>public_repos {user.public_repos}</Text>
-      <Text>public_gists {user.public_gists}</Text>
-      <Text>Location {user.location}</Text>
-      <Text>Company {user.company}</Text>
-      <Text>creation date {user.created_at.slice(0, 10).split('-').reverse().join('/')}</Text>
+      <Text style={styles.fullName}>{user.name}</Text>
+      <Text style={styles.biography}>{user.bio}</Text>
+      <Text><FontAwesomeIcon icon={ faMapMarkerAlt } />  {user.location}</Text>
+      <Text><FontAwesomeIcon icon={ faBuilding } />  {user.company}</Text>
+       <Text><FontAwesomeIcon icon={ faBirthdayCake } />  {date}</Text>
+      <View style={{flexDirection: 'row', marginTop: 20}}>
+        <View style={styles.inCase}>
+          <Text>Followers</Text>
+          <Text style={{textAlign: 'center'}}>{user.followers}</Text>
+        </View>
+        <View style={styles.inCase}>
+          <Text>Following</Text>
+          <Text style={{textAlign: 'center'}}>{user.following}</Text>
+        </View>
+        <View style={styles.inCase}>
+          <Text>public repos</Text>
+          <Text style={{textAlign: 'center'}}>{user.public_repos}</Text>
+        </View>
+        <View style={styles.inCase}>
+          <Text>public gists</Text>
+          <Text style={{textAlign: 'center'}}>{user.public_gists}</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -62,16 +80,31 @@ export default App;
 
 const styles = StyleSheet.create({
   avatar: {
-    width: 200,
-    height: 200,
+    width: 175,
+    height: 175,
     borderRadius: 100,
-    marginBottom: 100
+    marginBottom: 75
   },
   title: { 
-    fontSize: 30, 
+    fontSize: 40, 
     fontWeight:'bold',
   },
-  bouton:{
-    marginTop: 200
+  fullName: {
+    fontSize: 12,
+    color: 'gray',
+  },
+  biography: {
+    marginBottom: 15
+  },
+  case: {
+    width: 0,
+    borderWidth: 1,
+    borderColor: '#e2e8f0'
+  },
+  inCase: {
+    flex: 1,
+    flexWrap: 'wrap',
+    width: '15%',
+    textAlign: 'center',
   }
 });
