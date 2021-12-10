@@ -27,7 +27,7 @@ function ResultSearch({ route, navigation }) {
   const [date, setDate] = useState('')
 
   async function getUserInfo(username) {
-    const response = await fetch(`http://${process.env.API_IP_ADDRESS}:${process.env.API_PORT}/user/${username}`);
+    const response = await fetch(`http://<YOUR_IP>:<YOUR_PORT>/user/${username}`);
     const data = await response.json();
     setUser(data)
     setDate(user.created_at.slice(0, 10).split('-').reverse().join('/'))
