@@ -10,10 +10,10 @@ function HomeScreen({ navigation }) {
   const [username, setUsername] = useState('')
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Hello github</Text>
-      <TextInput placeholder='github Username' onChangeText={text => setUsername(text)} />
+      <Text style={styles.title}>Hello github</Text>
+      <TextInput style={styles.input} placeholder='github Username' onChangeText={text => setUsername(text)} />
       <Button
-        title="Go to Details"
+        title="Afficher les infos"
         onPress={() => navigation.navigate('ResultSearch', { username: username })}
       />
     </View>
@@ -106,5 +106,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '15%',
     textAlign: 'center',
-  }
+  },
+  input: {
+    height: 40,
+    width: '50%',
+    marginTop: 24,
+    marginBottom: 24,
+    borderWidth: 1,
+    padding: 10,
+  },
 });
