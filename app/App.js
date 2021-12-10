@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapMarkerAlt, faBuilding, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
+require('dotenv').config()
 
 function HomeScreen({ navigation }) {
   const [username, setUsername] = useState('')
@@ -26,7 +27,7 @@ function ResultSearch({ route, navigation }) {
   const [date, setDate] = useState('')
 
   async function getUserInfo(username) {
-    const response = await fetch(`http://192.168.0.32:4242/user/${username}`);
+    const response = await fetch(`http://${process.env.API_IP_ADDRESS}:${process.env.API_PORT}/user/${username}`);
     const data = await response.json();
     setUser(data)
     setDate(user.created_at.slice(0, 10).split('-').reverse().join('/'))
