@@ -38,9 +38,18 @@ function ResultSearch({ route, navigation }) {
       <Text style={styles.title}>{user.login}</Text>
       <Text style={styles.fullName}>{user.name}</Text>
       <Text style={styles.biography}>{user.bio}</Text>
-      <Text><FontAwesomeIcon icon={ faMapMarkerAlt } />  {user.location}</Text>
-      <Text><FontAwesomeIcon icon={ faBuilding } />  {user.company}</Text>
-       <Text><FontAwesomeIcon icon={ faBirthdayCake } />  {date}</Text>
+      <View style={{flexDirection: 'row', marginTop: 20}}>
+        <View style={styles.inCase}>
+          <Text><FontAwesomeIcon icon={ faMapMarkerAlt } />  {user.location}</Text>
+        </View>
+        <View style={styles.inCase}>
+          <Text><FontAwesomeIcon icon={ faBuilding } />  {user.company}</Text>
+        </View>
+        <View style={styles.inCase}>
+          <Text><FontAwesomeIcon icon={ faBirthdayCake } />  {date}</Text>
+        </View>
+      </View>
+      <View style={styles.separator}></View>
       <View style={{flexDirection: 'row', marginTop: 20}}>
         <View style={styles.inCase}>
           <Text>Followers</Text>
@@ -96,11 +105,6 @@ const styles = StyleSheet.create({
   biography: {
     marginBottom: 15
   },
-  case: {
-    width: 0,
-    borderWidth: 1,
-    borderColor: '#e2e8f0'
-  },
   inCase: {
     flex: 1,
     flexWrap: 'wrap',
@@ -115,4 +119,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  separator: {
+    marginTop: 24,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1, 
+    width: 1000
+  }
 });
